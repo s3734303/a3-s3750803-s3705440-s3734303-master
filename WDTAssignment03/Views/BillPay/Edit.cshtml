@@ -1,0 +1,45 @@
+﻿@model Admin.Models.BillPay
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>BillPay</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="BillPayId" />
+            <div class="form-group">
+                <label asp-for="Amount" class="control-label"></label>
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount" class="text-danger"></span>
+            </div>
+            <label for="ScheduleDate" class="control-label">Schedule Date -</label>
+            <input id="ScheduleDate" name="ScheduleDate" class="form-control" type="date"
+                   data-val="true"
+                   data-val-required="required." />
+            @Html.ValidationMessage("scheduleDate", new { @class = "text-danger" })
+            <br />
+            <label for="periodType" class="control-label">Period</label>
+            <select id="periodType" name="periodType">
+                <option value="@PeriodType.M">Monthly</option>
+                <option value="@PeriodType.Q">Quarter</option>
+                <option value="@PeriodType.Y">Annually</option>
+                <option value="@PeriodType.M">One-Time</option>
+            </select>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Edit" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

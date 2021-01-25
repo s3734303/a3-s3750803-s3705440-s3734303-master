@@ -1,0 +1,85 @@
+﻿@model IEnumerable<Admin.Models.TransactionDto>
+
+@{
+    ViewData["Title"] = "Transaction History";
+}
+<style>
+    h1 {
+        background-color: dimgrey;
+    }
+
+    th {
+        background-color: darkgrey;
+    }
+
+    td {
+        background-color: floralwhite;
+    }
+
+    table, th, td {
+        border: 1px solid black;
+    }
+
+        td:hover {
+            background-color: #f5f5f5;
+        }
+
+        td:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+</style>
+
+
+
+<h1>View Transactions</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TransactionType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AccountNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DestinationAccount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ModifyDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TransactionType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AccountNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DestinationAccount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Amount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Comment)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ModifyDate)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

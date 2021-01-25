@@ -1,0 +1,138 @@
+﻿@{
+    ViewData["Title"] = "Transactions per Account";
+}
+
+<div class="card bm-3">
+    <div class="card-header bg-warning text-dark">
+        <i class="fade fa-thumbs-o-up" aria-hidden="true"></i>
+        Transactions per Account
+    </div>
+    <div class="card-body">
+        <canvas id="chart1" class="chartjs-render-monitor" style="display: block; "></canvas>
+        <canvas id="chart2" class="chartjs-render-monitor" style="display: block; "></canvas>
+        <canvas id="chart3" class="chartjs-render-monitor" style="display: block; "></canvas>
+    </div>
+    <div class="card-footer small text-muted" style="background-color:#ffd6cc;"></div>
+</div>
+@section scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.min.js" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/gh/emn178/chartjs-plugin-labels/src/chartjs-plugin-labels.js"></script>
+
+    <script>
+        $(document).ready(setup);
+
+        function setup() {
+            var option = {
+                type: "GET",
+                url: "/chart/data",
+                contentType: "application/json;charset=utf-8",
+                datatype: "json",
+                success: data_arrived
+
+            };
+            $.ajax(option);     //Request HTTP GET
+        }
+
+        function data_arrived(data) {
+            console.log(data);
+            var x_data = data[0];
+            var y_data = data[1];
+
+            var panel1 = $('#chart1').get(0).getContext("2d");
+            var chart1 = new Chart(
+                panel1,
+                {
+                    type: 'doughnut',
+                    data: {
+                        labels: x_data,
+                        datasets: [{
+                            label: 'Transaction History',
+                            data: y_data,
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+
+            var panel1 = $('#chart2').get(0).getContext("2d");
+            var chart2 = new Chart(
+                panel1,
+                {
+                    type: 'bar',
+                    data: {
+                        labels: x_data,
+                        datasets: [{
+                            label: 'Transactions per Account',
+                            data: y_data,
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 0.2)',
+                                'rgba(54, 162, 235, 0.2)',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+
+            var panel1 = $('#chart3').get(0).getContext("2d");
+            var chart3 = new Chart(
+                panel1,
+                {
+                    type: 'line',
+                    data: {
+                        labels: x_data,
+                        datasets: [{
+                            label: 'Transactions per Account',
+                            data: y_data,
+                            backgroundColor: ['rgba(75, 192, 192, 0.2)'],
+                            borderColor: ['rgba(255, 99, 132, 1)'],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            yAxes: [{
+                                stacked: true
+                            }]
+                        }
+                    }
+                });
+        }
+    </script>
+}

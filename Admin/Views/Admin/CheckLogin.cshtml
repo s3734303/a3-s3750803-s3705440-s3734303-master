@@ -1,0 +1,102 @@
+﻿@model IEnumerable<LoginDto>
+@{
+    ViewData["Title"] = "CheckLogin";
+}
+
+
+    <h2>Credential Management</h2>
+
+    <style>
+        h2 {
+            background-color: dimgrey;
+        }
+
+        th {
+            background-color: darkgrey;
+        }
+
+        td {
+            background-color: floralwhite;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+            td:hover {
+                background-color: #f5f5f5;
+            }
+
+            td:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+    </style>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CustomerID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LoginStatus)
+                </th>
+                <th>
+                    @("Access")
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                foreach (LoginDto login in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => login.UserID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => login.CustomerID)
+                        </td>
+                        <td>
+                            @{
+                                string status;
+                                if(login.LoginStatus)
+                                    status= ("Online");
+                                else
+                                    status = ("Offline");
+                            }
+                            @status
+                        </td>
+                        <td>
+                            @{
+                                string access,change;
+                                if (DateTime.Compare(login.Timer, DateTime.UtcNow) > 0)
+                                {
+                                    access = "Denied";
+                                    change = "Unlock";
+                                }
+                                else
+                                {
+                                    change = "Lock";
+                                    access = "Granted";
+                                }
+                            }
+                            @access
+                        </td>
+                        <td>
+                            <form asp-action="blocklogin">
+                                <input type="hidden" id="id" name="id" value="@login.UserID" />
+                                <input type="submit" value="@change" />
+                            </form>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+
+
+    </table>

@@ -1,0 +1,31 @@
+﻿@model int
+
+@{
+    var statusCode = Model;
+    var statusmessage = "";
+    switch (statusCode)
+    {
+        case 400:
+            statusmessage = "Bad request: The request cannot be fulfilled due to bad syntax";
+            break;
+        case 403:
+            statusmessage = "Forbidden";
+            break;
+        case 404:
+            statusmessage = "The Page you are requesting is not there";
+            break;
+        case 408:
+            statusmessage = "The server timed out waiting for the request";
+            break;
+        case 17003:
+            statusmessage = "You attempted maximum login filed occurance, PLease try again after 1 min. ";
+            break;
+        default:
+            statusmessage = "That’s odd... Something we didn't expect happened";
+            break;
+    }
+}
+<div class="jumbotron">
+    <h1>Error @Model</h1>
+    <h3>@statusmessage</h3>
+</div>
